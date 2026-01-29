@@ -1,5 +1,11 @@
-import Link from "next/link";
 import React from "react";
+import Nav from "../components/Nav"; // navbar component
+import "../globals.css"; // optional global styles
+
+export const metadata = {
+  title: "Angry Beaver Knifes",
+  description: "Angry Beaver Store",
+};
 
 export default function RootLayout({
   children,
@@ -10,15 +16,31 @@ export default function RootLayout({
     <html lang="en">
       <body
         style={{
-          margin: "3rem",
+          margin: 0,
+          fontFamily: "system-ui, sans-serif",
+          backgroundColor: "#fafafa",
+          color: "#333",
         }}
       >
+        {/* Navbar */}
         <header>
-          <Link href="/">Home</Link>
-          {" | "}
-          <Link href="/posts">Posts</Link>
+          <Nav />
         </header>
-        <main>{children}</main>
+
+        {/* Main content */}
+        <main style={{ padding: "2rem", minHeight: "80vh" }}>{children}</main>
+
+        {/* Footer */}
+        <footer
+          style={{
+            padding: "2rem",
+            textAlign: "center",
+            borderTop: "1px solid #ddd",
+            backgroundColor: "#f8f8f8",
+          }}
+        >
+          © {new Date().getFullYear()} MyShop. All rights reserved.
+        </footer>
       </body>
     </html>
   );

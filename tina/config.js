@@ -1,15 +1,15 @@
 import { defineConfig } from "tinacms";
 import page from "./collections/page";
 import post from "./collections/post";
-import product from "./collections/product"; // new collection for your shop
+import product from "./collections/product"; // optional if you added it
 
 export const config = defineConfig({
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  branch:
-    process.env.NEXT_PUBLIC_TINA_BRANCH || // custom branch env override
-    process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF || // Vercel branch env
-    process.env.HEAD, // Netlify branch env
   token: process.env.TINA_TOKEN,
+  branch:
+    process.env.NEXT_PUBLIC_TINA_BRANCH ||
+    process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF ||
+    process.env.HEAD,
   media: {
     tina: {
       publicFolder: "public",
@@ -17,15 +17,19 @@ export const config = defineConfig({
     },
   },
   build: {
-    publicFolder: "public", // The public asset folder
-    outputFolder: "admin", // admin panel output
+    publicFolder: "public",
+    outputFolder: "admin",
   },
   schema: {
-    collections: [
-      page,    // existing pages
-      post,    // existing posts
-      product, // new products collection for your shop
-    ],
+    collections: [page, post /*, product */],
+  },
+  search: {
+    tina: {
+      indexerToken: process.env.TINA_SEARCH_TOKEN, // ← required for search
+      stopwordLanguages: ["eng"],
+    },
+    indexBatchSize: 100,
+    maxSearchIndexFieldLength: 100,
   },
 });
 
